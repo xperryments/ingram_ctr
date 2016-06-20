@@ -1,0 +1,31 @@
+﻿@model ingram_ctr.Models.CounterModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div id="dvCtr">
+    @Model.ctr_value
+</div>
+<input type="button" id="btnUp" value="Increment" />
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $("#btnUp").click(function () {
+        var x = $("#dvCtr").text()*1;
+        if (x < 10) {
+            x += 1;
+            $("#dvCtr").html("");
+            $("#dvCtr").text(x);
+            $.ajax({
+                url: "/Counter/UpdateCounter",
+                type: "POST",
+                dataType: "json",
+                data: { ctr: x }
+            });
+        } else {
+            alert("Max value is 10");
+        }
+    });
+</script>
